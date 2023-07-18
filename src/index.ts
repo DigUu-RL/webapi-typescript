@@ -1,3 +1,4 @@
 import { server } from './server/Server';
 
-server.listen(9000, () => console.log('API is running!'));
+const port = process.env.PORT;
+server.listen(port || 9000, () => console.log('API is running!'));

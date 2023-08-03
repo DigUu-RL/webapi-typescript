@@ -1,14 +1,21 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import * as yup from 'yup';
+
+import { validation } from '../../shared/middlewares';
 
 interface ICity {
-    name: string
+    name: string,
+    state: string
 }
 
-export const create = (request: Request<{}, {}, ICity>, response: Response) => {
-    const data: ICity = request.body;
+export const createValidation = validation((getSchema) => ({
+    body: getSchema<ICity>(yup.object().shape({
+        name: yup.string().required(),
+        state: yup.string().min(2).max(2).required()
+    }))
+}));
 
-    console.log(data);
-
-    return response.send(StatusCodes.CREATED);
+export const create = async (request: Request<{}, {}, ICity>, response: Response) => {
+    return response.status(StatusCodes.CREATED).json(request.body);
 };

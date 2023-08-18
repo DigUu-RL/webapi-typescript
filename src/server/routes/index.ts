@@ -12,5 +12,6 @@ router.get('/api/health', (_, response) => {
 
 // city routes
 router.post('/api/city', CityController.createValidation, CityController.create);
+router.get('/api/city', CityController.getAllValidation, CityController.getAll);
 
 export { router };
